@@ -5,8 +5,13 @@ fetch('http://localhost:5678/api/works')
   .catch(error => console.error('Erreur:', error));
 */
 
-const reponse = await fetch("http://localhost:5678/api/works");
-const works = await reponse.json();
+const reponseWorks = await fetch("http://localhost:5678/api/works");
+const works = await reponseWorks.json();
+
+let buttonTous = document.querySelector('.filters-tous')
+let buttonObjets = document.querySelector('.filters-objets')
+let buttonAppartements = document.querySelector('.filters-appartements')
+let buttonHotels = document.querySelector('.filters-hotels')
 
 function generatorWorks(works){
     for(let i = 0 ; i < works.length ; i++){
@@ -27,62 +32,43 @@ function generatorWorks(works){
     }
 }
 
-let buttonTous = document.querySelector('.filters-tous')
-let buttonObjets = document.querySelector('.filters-objets')
-let buttonAppartements = document.querySelector('.filters-appartements')
-let buttonHotels = document.querySelector('.filters-hotels')
 
-buttonTous.addEventListener("click", function(){
-    let filtersTous = works.filter(function (work){
-        return work.category.id >= 0
-    })
-    document.querySelector(".gallery").innerHTML = '';
-    generatorWorks(filtersTous)
-})
 
-buttonObjets.addEventListener("click", function(){
-    let filtersObjets = works.filter(function (work){
-        return work.category.name == "Objets"
+if(buttonTous){ // if pour éviter que cela s'applique sur la page login
+    buttonTous.addEventListener("click", function(){
+        let filtersTous = works.filter(function (work){
+            return work.category.id >= 0
+        })
+        document.querySelector(".gallery").innerHTML = '';
+        generatorWorks(filtersTous)
     })
-    document.querySelector(".gallery").innerHTML = '';
-    generatorWorks(filtersObjets)
-})
 
-buttonAppartements.addEventListener("click", function(){
-    let filtersAppartements = works.filter(function (work){
-        return work.category.name == "Appartements"
+    buttonObjets.addEventListener("click", function(){
+        let filtersObjets = works.filter(function (work){
+            return work.category.name == "Objets"
+        })
+        document.querySelector(".gallery").innerHTML = '';
+        generatorWorks(filtersObjets)
     })
-    document.querySelector(".gallery").innerHTML = '';
-    generatorWorks(filtersAppartements)
-})
 
-buttonHotels.addEventListener("click", function(){
-    let filtersHotels = works.filter(function (work){
-        return work.category.name == "Hotels & restaurants"
+    buttonAppartements.addEventListener("click", function(){
+        let filtersAppartements = works.filter(function (work){
+            return work.category.name == "Appartements"
+        })
+        document.querySelector(".gallery").innerHTML = '';
+        generatorWorks(filtersAppartements)
     })
-    document.querySelector(".gallery").innerHTML = '';
-    generatorWorks(filtersHotels)
-})
+
+    buttonHotels.addEventListener("click", function(){
+        let filtersHotels = works.filter(function (work){
+            return work.category.name == "Hotels & restaurants"
+        })
+        document.querySelector(".gallery").innerHTML = '';
+        generatorWorks(filtersHotels)
+    })
+}
 
 generatorWorks(works)
-
-
-
-
-/*
-TENTATIVE DE FILTER ÉCHOUÉE
-buttonObjets.addEventListener("click", function(){
-    for(let i = 0 ; i < works.length ; i++){
-        let x = works[i].category.name;
-        let queObjets = works.filter(function(works){
-            return works.category.name = "Objets"
-        })
-        console.log(queObjets)
-    }
-})
-*/
-
-
 
 /*
 let filtersButtons = document.querySelectorAll(".filters button")
