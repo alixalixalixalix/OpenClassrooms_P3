@@ -46,6 +46,7 @@ if(buttonTous){ // if pour éviter que cela s'applique sur la page login
     buttonObjets.addEventListener("click", function(){
         let filtersObjets = works.filter(function (work){
             return work.category.name == "Objets"
+            filtersObjets.classList.add("filters-active");
         })
         document.querySelector(".gallery").innerHTML = '';
         generatorWorks(filtersObjets)
@@ -70,10 +71,26 @@ if(buttonTous){ // if pour éviter que cela s'applique sur la page login
 
 generatorWorks(works)
 
+
+
+// permet de garder le bouton visuellement actif 
+let allButtonsFilters = document.querySelectorAll(".filters-button");
+
+allButtonsFilters.forEach(aButtonFilters => {
+    aButtonFilters.addEventListener('click', function (){
+        document.querySelector(".filters-active")?.classList.remove('filters-active');
+        aButtonFilters.classList.add('filters-active');
+    });
+});
+
+
+
+
 /*
 let filtersButtons = document.querySelectorAll(".filters button")
+console.log(filtersButtons[0])
 
-fonction(le bouton objet){
+fonction x(filtersButtons[x]){
     if le bouton est inactif {
         le bouton on lui retire la class inactive 
         le bouton on lui met la class active
