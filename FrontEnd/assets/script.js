@@ -88,10 +88,9 @@ allButtonsFilters.forEach(aButtonFilters => {
 
 /*
 let filtersButtons = document.querySelectorAll(".filters button")
-console.log(filtersButtons[0])
 
 fonction x(filtersButtons[x]){
-    if le bouton est inactif {
+    if (le bouton est inactif) {
         le bouton on lui retire la class inactive 
         le bouton on lui met la class active
         les autres boutons sont inactif
