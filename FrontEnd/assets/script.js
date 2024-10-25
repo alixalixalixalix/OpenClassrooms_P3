@@ -73,7 +73,7 @@ generatorWorks(works)
 
 
 
-// permet de garder le bouton visuellement actif 
+// BOUTON FILTRES ACTIF
 let allButtonsFilters = document.querySelectorAll(".filters-button");
 
 allButtonsFilters.forEach(aButtonFilters => {
@@ -86,15 +86,88 @@ allButtonsFilters.forEach(aButtonFilters => {
 
 
 
-/*
-let filtersButtons = document.querySelectorAll(".filters button")
+let editionProjet = document.querySelector(".editionProjet")
+let modaleEdition = document.querySelector(".modaleEdition")
+let closeModale = document.querySelector(".modaleEdition-close")
+let backModale = document.querySelector(".modaleEdition-back")
 
-fonction x(filtersButtons[x]){
-    if (le bouton est inactif) {
-        le bouton on lui retire la class inactive 
-        le bouton on lui met la class active
-        les autres boutons sont inactif
+let selectTagInput = document.querySelector(".selectTag-input")
+let tagImg = document.querySelector(".selectTag-input img")
+let selectTagResponse = document.querySelector(".selectTag-response")
+let tagChoix = document.querySelector(".selectTag-input p")
+let txtResponse = document.querySelector(".modaleEdition-addPhoto input[type=text]")
+let allLi = document.querySelectorAll(".selectTag-response li")
+
+let modaleEditionGallery = document.querySelector(".modaleEdition-gallery")
+let modaleEditionAddPhoto = document.querySelector(".modaleEdition-addPhoto")
+let buttonModaleGallery = document.querySelector(".modaleEdition-gallery button")
+let buttonModaleAddPhoto = document.querySelector(".modaleEdition-addPhoto button")
+
+// MODALE OPEN
+editionProjet.addEventListener("click", function(){
+    modaleEdition.style.display = "flex";
+})
+
+// MODALE CLOSE
+closeModale.addEventListener("click", function(){
+    modaleEdition.style.display = "none";
+    // les champs redeviennent vides
+    txtResponse.value = '';
+    tagChoix.innerText = ''; 
+})
+
+// MODALE ADD PHOTO
+buttonModaleGallery.addEventListener("click", function(){
+    modaleEditionGallery.style.display = "none";
+    modaleEditionAddPhoto.style.display = "block";
+    backModale.style.display = "block";
+})
+
+// CLOSE ADD PHOTO
+backModale.addEventListener("click", function(){
+    modaleEditionGallery.style.display = "block";
+    modaleEditionAddPhoto.style.display = "none";
+    backModale.style.display = "none";
+})
+
+// quand je ferme avec la croix à l'étape 2, je reviens à l'étape 2
+
+// DROPDOWN OPEN/CLOSE
+selectTagInput.addEventListener("click", function(){
+    selectTagResponse.classList.toggle("menu-open");
+    tagImg.style.transform = "rotate(180deg)";
+    if(selectTagResponse.style.display = "block"){
+        selectTagInput.addEventListener("click", function(){
+            selectTagResponse.classList.remove("menu-open");
+            tagImg.style.transform = "rotate(0deg)";        
+        })
     }
-}
-je suis bloqué car je n'arrive pas à mettre dans la fonction un paramètre non défini (en l'occurence l'un des 4 boutons)
+})
+
+// Écriture du choix dans le champ
+allLi.forEach(aLi => {
+    aLi.addEventListener("click", function() {
+        let responseClicked = aLi.innerText
+        tagChoix.innerText = responseClicked;
+        selectTagResponse.style.display = "none";
+        tagImg.style.transform = "rotate(0deg)";
+    })
+})
+
+
+
+
+
+
+
+
+
+/*
+
+1. clic pour ouvrir dropdown OK
+2. la flèche se retourne OK
+2. si clic sur une réponse > l'affiche dans le champ 
+3. si clic sur autre chose > ferme le dropdown
+
+
 */

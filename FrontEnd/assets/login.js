@@ -64,10 +64,9 @@ export function ajoutListenerLogin() {
     
     });
 }
-
 ajoutListenerLogin()
-
 */
+
 /*
 const login = fetch("http://localhost:5678/api-docs/users/login")
     .then(login => console.log(login.email))
@@ -81,13 +80,11 @@ const userPassword = document.querySelector("#password")
 // c'est sur le form qu'on écoute l'event submit et non le bouton
 formLogin.addEventListener("submit", async function(event){
     event.preventDefault()
-
     console.log(userEmail.value)
     console.log(userPassword.value) 
     
-    let demandeLogin = await fetch("http://localhost:5678/api-docs/users/login", {
+    let demandeLogin = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
-        headers: { "accept": "application/json" },
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             email: userEmail.value,
@@ -97,7 +94,6 @@ formLogin.addEventListener("submit", async function(event){
 
     if (demandeLogin.ok){
         console.log("youpi")
-
     }
 })
 
