@@ -1,9 +1,25 @@
-/*
-fetch('http://localhost:5678/api/works')
-  .then(response => response.json()) // Transforme la réponse en JSON
-  .then(data => console.log(data))   // Affiche les données récupérées
-  .catch(error => console.error('Erreur:', error));
-*/
+
+// on vérifie si il y a le token dans le localstorage
+let token = window.localStorage.getItem("token")
+if(token){ // si oui
+    // dans la nav on modifie le login par logout
+    let navLog = document.querySelectorAll("li")
+    navLog[2].innerText = "logout"  
+
+    // on fait apparaitre la topbar edition
+    let editionTopbar = document.querySelector(".edition-topbar") 
+    editionTopbar.style.display = "flex";
+
+    // on fait apparaitre le modifier dans les projets
+    let editionProjets = document.querySelector(".edition-projets")
+    editionProjets.style.display = "block";
+
+    // au clic sur logout, on se déconnecte
+    navLog[2].addEventListener("click", function() {
+        localStorage.removeItem("token")
+        window.location.href = "login.html"
+    })
+}
 
 const reponseWorks = await fetch("http://localhost:5678/api/works");
 const works = await reponseWorks.json();
@@ -37,7 +53,7 @@ function generatorWorks(works){
 if(buttonTous){ // if pour éviter que cela s'applique sur la page login
     buttonTous.addEventListener("click", function(){
         let filtersTous = works.filter(function (work){
-            return work.category.id >= 0
+            return work.categoryId >= 0
         })
         document.querySelector(".gallery").innerHTML = '';
         generatorWorks(filtersTous)
@@ -45,8 +61,7 @@ if(buttonTous){ // if pour éviter que cela s'applique sur la page login
 
     buttonObjets.addEventListener("click", function(){
         let filtersObjets = works.filter(function (work){
-            return work.category.name == "Objets"
-            filtersObjets.classList.add("filters-active");
+            return work.categoryId === 1
         })
         document.querySelector(".gallery").innerHTML = '';
         generatorWorks(filtersObjets)
@@ -54,7 +69,7 @@ if(buttonTous){ // if pour éviter que cela s'applique sur la page login
 
     buttonAppartements.addEventListener("click", function(){
         let filtersAppartements = works.filter(function (work){
-            return work.category.name == "Appartements"
+            return work.categoryId === 2
         })
         document.querySelector(".gallery").innerHTML = '';
         generatorWorks(filtersAppartements)
@@ -62,7 +77,7 @@ if(buttonTous){ // if pour éviter que cela s'applique sur la page login
 
     buttonHotels.addEventListener("click", function(){
         let filtersHotels = works.filter(function (work){
-            return work.category.name == "Hotels & restaurants"
+            return work.categoryId === 3
         })
         document.querySelector(".gallery").innerHTML = '';
         generatorWorks(filtersHotels)
@@ -86,59 +101,89 @@ allButtonsFilters.forEach(aButtonFilters => {
 
 
 
-let editionProjet = document.querySelector(".editionProjet")
+let editionProjets = document.querySelector(".edition-projets")
 let modaleEdition = document.querySelector(".modaleEdition")
 let closeModale = document.querySelector(".modaleEdition-close")
 let backModale = document.querySelector(".modaleEdition-back")
 
-let selectTagInput = document.querySelector(".selectTag-input")
-let tagImg = document.querySelector(".selectTag-input img")
-let selectTagResponse = document.querySelector(".selectTag-response")
-let tagChoix = document.querySelector(".selectTag-input p")
+let addPhotoSelectTagInput = document.querySelector(".addPhoto-selectTag-input")
+let tagImg = document.querySelector(".addPhoto-selectTag-input img")
+let addPhotoSelectTagResponse = document.querySelector(".addPhoto-selectTag-response")
+let tagChoix = document.querySelector(".addPhoto-selectTag-input p")
 let txtResponse = document.querySelector(".modaleEdition-addPhoto input[type=text]")
-let allLi = document.querySelectorAll(".selectTag-response li")
+let allLi = document.querySelectorAll(".addPhoto-selectTag-response li")
+let addPhotoSelectTitre = document.querySelector(".addPhoto-selectTitre")
 
 let modaleEditionGallery = document.querySelector(".modaleEdition-gallery")
 let modaleEditionAddPhoto = document.querySelector(".modaleEdition-addPhoto")
 let buttonModaleGallery = document.querySelector(".modaleEdition-gallery button")
 let buttonModaleAddPhoto = document.querySelector(".modaleEdition-addPhoto button")
 
-// MODALE OPEN
-editionProjet.addEventListener("click", function(){
+let body = document.querySelector("body")
+
+// MODALE OUVERTURE 1/2
+editionProjets.addEventListener("click", function(){
     modaleEdition.style.display = "flex";
+    body.style.overflow = "hidden";
 })
 
-// MODALE CLOSE
+// MODALE FERMETURE
 closeModale.addEventListener("click", function(){
     modaleEdition.style.display = "none";
+    // on revient à l'étape 1 après ré-ouverture
+    modaleEditionGallery.style.display = "block";
+    modaleEditionAddPhoto.style.display = "none";
+    backModale.style.display = "none";
+    // les champs redeviennent vides
+    txtResponse.value = '';
+    tagChoix.innerText = ''; 
+    body.style.overflow = "auto";
+
+})
+
+// MODALE VALIDER
+buttonModaleAddPhoto.addEventListener("click", function(){
+    modaleEdition.style.display = "none";
+    // on revient à l'étape 1 après ré-ouverture
+    modaleEditionGallery.style.display = "block";
+    modaleEditionAddPhoto.style.display = "none";
+    backModale.style.display = "none";
     // les champs redeviennent vides
     txtResponse.value = '';
     tagChoix.innerText = ''; 
 })
 
-// MODALE ADD PHOTO
+// OUVERTURE MODALE 2/2
 buttonModaleGallery.addEventListener("click", function(){
     modaleEditionGallery.style.display = "none";
     modaleEditionAddPhoto.style.display = "block";
     backModale.style.display = "block";
 })
 
-// CLOSE ADD PHOTO
+// RETOUR SUR MODALE 1/2
 backModale.addEventListener("click", function(){
     modaleEditionGallery.style.display = "block";
     modaleEditionAddPhoto.style.display = "none";
     backModale.style.display = "none";
 })
 
-// quand je ferme avec la croix à l'étape 2, je reviens à l'étape 2
+// pas de déplacement du container quand ouverture dropdown
+// changement de couleur du bouton valider si img + titre + catégorie renseignée
+// quand connecté, login devient logout et permet la déconnexion
+
+/*
+if(tagChoix != '' || addPhotoSelectTitre != ''){
+    buttonModaleAddPhoto.classList.add(".buttonModaleActive")
+}
+*/
 
 // DROPDOWN OPEN/CLOSE
-selectTagInput.addEventListener("click", function(){
-    selectTagResponse.classList.toggle("menu-open");
+addPhotoSelectTagInput.addEventListener("click", function(){
+    addPhotoSelectTagResponse.classList.toggle("menu-open");
     tagImg.style.transform = "rotate(180deg)";
-    if(selectTagResponse.style.display = "block"){
-        selectTagInput.addEventListener("click", function(){
-            selectTagResponse.classList.remove("menu-open");
+    if(addPhotoSelectTagResponse.style.display = "block"){
+        addPhotoSelectTagInput.addEventListener("click", function(){
+            addPhotoSelectTagResponse.classList.remove("menu-open");
             tagImg.style.transform = "rotate(0deg)";        
         })
     }
@@ -149,7 +194,7 @@ allLi.forEach(aLi => {
     aLi.addEventListener("click", function() {
         let responseClicked = aLi.innerText
         tagChoix.innerText = responseClicked;
-        selectTagResponse.style.display = "none";
+        addPhotoSelectTagResponse.style.display = "none";
         tagImg.style.transform = "rotate(0deg)";
     })
 })
