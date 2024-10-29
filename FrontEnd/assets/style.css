@@ -83,7 +83,7 @@ table {
 .imgEdition {
 	width:16px;
 	height:16px;
-	margin-right:10px;
+	margin-right:6px;
 }
 
 .portfolio-header {
@@ -99,6 +99,7 @@ table {
 }
 
 .edition-projets {
+	display: flex;;
 	padding-left: 31px;
 	align-items: center;
 	cursor: pointer;
@@ -312,7 +313,7 @@ footer nav ul {
 
 /* MODALE */
 
-.modaleEdition {
+.modale {
 	position:fixed;
 	font-family: 'Work Sans';
 	font-size: 26px;
@@ -326,18 +327,18 @@ footer nav ul {
 	align-items: center;
 }
 
-	.modaleEdition-container {
+	.modale-container {
 		position: absolute;
 		background-color: white;
 		border-radius: 10px;
 	}
 
-		.modaleEdition-header {
+		.modale-header {
 			display:flex;
 			justify-content: space-between;
 		}
 
-			.modaleEdition-close, .modaleEdition-back {
+			.modale-close, .modale-back {
 				width:24px;
 				height:24px;
 				position:absolute;
@@ -348,16 +349,16 @@ footer nav ul {
 				cursor: pointer;
 			}
 
-			.modaleEdition-close {
+			.modale-close {
 				right:0;
 			}
 
-			.modaleEdition-back {
+			.modale-back {
 				left:0;
 				display:none;
 			}
 
-				.modaleEdition-close img {
+				.modale-close img {
 					width:12px;
 					height:12px;
 					display:flex;
@@ -366,7 +367,7 @@ footer nav ul {
 					align-items: center;
 				}
 
-				.modaleEdition-back img {
+				.modale-back img {
 					width:21px;
 					height:18px;
 					display:flex;
@@ -377,18 +378,18 @@ footer nav ul {
 
 
 
-		.modaleEdition-gallery {
+		.modale-gallery {
 			display:block;
 		}
 
-			.modaleEdition h3 {
+			.modale h3 {
 				margin-top: 60px;
 				margin-bottom: 45px;
 				text-align: center;
 				display:inline-block;
 			}
 
-			.modaleEdition-list {
+			.modale-list {
 				margin:auto;
 				display:grid;
 				grid-template-columns: 77px 77px 77px 77px 77px;
@@ -396,7 +397,7 @@ footer nav ul {
 				padding: 0 105px 0px 105px;
 			}
 
-				.modaleEdition-card {
+				.modale-card {
 					height:102px;
 					background-color: pink;
 					display:flex;
@@ -421,13 +422,13 @@ footer nav ul {
 						cursor: pointer;
 					}
 
-				.modaleEdition hr {
+				.modale hr {
 					width:420px;
 					margin-top: 67px;
 					margin-bottom: 38px;
 				}
 
-			.modaleEdition-gallery button {
+			.modale-gallery button {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
@@ -440,7 +441,7 @@ footer nav ul {
 				border:0px;
 			}
 
-			.modaleEdition-addPhoto button {
+			.modale-addPhoto button {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
@@ -458,11 +459,11 @@ footer nav ul {
 			}
 
 
-			.modaleEdition-addPhoto {
+			.modale-addPhoto {
 				display:none;
 			}
 
-			.modaleEdition form {
+			.modale form {
 				padding: 0px 105px 0px 105px;
 				margin-top: 0px;
 				font-size: 14px;
@@ -522,7 +523,6 @@ footer nav ul {
 				display:none;
 			}
 
-
 			.addPhoto-selectTag-input {
 				display:flex;
 				justify-content: space-between;
@@ -551,6 +551,8 @@ footer nav ul {
 				
 				.addPhoto-selectTag-response {
 					display:none;
+					position:absolute;
+					width: 420px;
 					box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 				}
 					.addPhoto-selectTag-response li {
@@ -566,4 +568,8 @@ footer nav ul {
 
 			.menu-open {
 				display:block;
+			}
+
+			.menu-close {
+				display:none;
 			}

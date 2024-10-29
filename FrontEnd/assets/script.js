@@ -12,7 +12,7 @@ if(token){ // si oui
 
     // on fait apparaitre le modifier dans les projets
     let editionProjets = document.querySelector(".edition-projets")
-    editionProjets.style.display = "block";
+    editionProjets.style.display = "flex";
 
     // au clic sur logout, on se déconnecte
     navLog[2].addEventListener("click", function() {
@@ -47,7 +47,7 @@ function generatorWorks(works){
         figcaptionBalise.innerText = worksTitle
 
         // apparition dans la modale
-        let modaleEditionList = document.querySelector(".modaleEdition-list")
+        let modaleEditionList = document.querySelector(".modale-list")
         let modaleEditionCard = document.createElement("div")
         let modaleEditionCardImg = document.createElement("img")
         let modaleEditionCardTrash = document.createElement("img")
@@ -60,7 +60,7 @@ function generatorWorks(works){
         modaleEditionList.appendChild(modaleEditionCard)
         modaleEditionCard.appendChild(modaleEditionCardImg)
         modaleEditionCard.appendChild(modaleEditionCardTrash)
-        modaleEditionCard.classList.add("modaleEdition-card")
+        modaleEditionCard.classList.add("modale-card")
         modaleEditionCardTrash.classList.add("trash")
     }
 }
@@ -119,48 +119,62 @@ allButtonsFilters.forEach(aButtonFilters => {
 
 
 let editionProjets = document.querySelector(".edition-projets")
-let modaleEdition = document.querySelector(".modaleEdition")
-let closeModale = document.querySelector(".modaleEdition-close")
-let backModale = document.querySelector(".modaleEdition-back")
+let modale = document.querySelector(".modale")
+let closeModale = document.querySelector(".modale-close")
+let backModale = document.querySelector(".modale-back")
 
 let addPhotoSelectTagInput = document.querySelector(".addPhoto-selectTag-input")
 let tagImg = document.querySelector(".addPhoto-selectTag-input img")
 let addPhotoSelectTagResponse = document.querySelector(".addPhoto-selectTag-response")
 let tagChoix = document.querySelector(".addPhoto-selectTag-input p")
-let txtResponse = document.querySelector(".modaleEdition-addPhoto input[type=text]")
+let txtResponse = document.querySelector(".modale-addPhoto input[type=text]")
 let allLi = document.querySelectorAll(".addPhoto-selectTag-response li")
 let addPhotoSelectTitre = document.querySelector(".addPhoto-selectTitre")
 
-let modaleEditionGallery = document.querySelector(".modaleEdition-gallery")
-let modaleEditionAddPhoto = document.querySelector(".modaleEdition-addPhoto")
-let buttonModaleGallery = document.querySelector(".modaleEdition-gallery button")
-let buttonModaleAddPhoto = document.querySelector(".modaleEdition-addPhoto button")
+let modaleContainer = document.querySelector(".modale-container")
+let modaleEditionGallery = document.querySelector(".modale-gallery")
+let modaleEditionAddPhoto = document.querySelector(".modale-addPhoto")
+let buttonModaleGallery = document.querySelector(".modale-gallery button")
+let buttonModaleAddPhoto = document.querySelector(".modale-addPhoto button")
 
 let body = document.querySelector("body")
 
-// MODALE OUVERTURE 1/2
+// MODALE OUVERTURE ÉTAPE 1/2
 editionProjets.addEventListener("click", function(){
-    modaleEdition.style.display = "flex";
+    modale.style.display = "flex";
     body.style.overflow = "hidden";
+    modale.addEventListener("click", function(){
+        closeModal()
+    })
+    modaleContainer.addEventListener("click", function(e){
+        e.stopPropagation();
+    })
 })
 
 // MODALE FERMETURE
 closeModale.addEventListener("click", function(){
-    modaleEdition.style.display = "none";
+    closeModal()
+})
+
+function closeModal() {
+    modale.style.display = "none";
     // on revient à l'étape 1 après ré-ouverture
     modaleEditionGallery.style.display = "block";
     modaleEditionAddPhoto.style.display = "none";
     backModale.style.display = "none";
     // les champs redeviennent vides
     txtResponse.value = '';
-    tagChoix.innerText = ''; 
+    tagChoix.innerText = '';
+    fileButton.value = '';
+    fileButtonFormat.innerText = "jpg, png : 4mo max"
+    fileButtonFormat.style.color = "#444444"
     body.style.overflow = "auto";
+}
 
-})
 
 // MODALE VALIDER
 buttonModaleAddPhoto.addEventListener("click", function(){
-    modaleEdition.style.display = "none";
+    modale.style.display = "none";
     // on revient à l'étape 1 après ré-ouverture
     modaleEditionGallery.style.display = "block";
     modaleEditionAddPhoto.style.display = "none";
@@ -188,15 +202,34 @@ backModale.addEventListener("click", function(){
 
 // DROPDOWN OPEN/CLOSE
 addPhotoSelectTagInput.addEventListener("click", function(){
-    addPhotoSelectTagResponse.classList.toggle("menu-open");
-    tagImg.style.transform = "rotate(180deg)";
-    if(addPhotoSelectTagResponse.style.display = "block"){
-        addPhotoSelectTagInput.addEventListener("click", function(){
-            addPhotoSelectTagResponse.classList.remove("menu-open");
-            tagImg.style.transform = "rotate(0deg)";        
-        })
+    if(addPhotoSelectTagResponse.style.display = "none"){
+        addPhotoSelectTagResponse.style.display = "block";
+        tagImg.style.transform = "rotate(180deg)";
+    }
+    else if(addPhotoSelectTagResponse.style.display = "block") {
+        addPhotoSelectTagResponse.style.display = "none";
+        tagImg.style.transform = "rotate(180deg)";
     }
 })
+
+/*
+
+au clic sur le dropdown
+    si la rep est display none : 
+        afficher les catégories
+        afficher rotate fleche
+
+    si la rep est display block :
+        masquer les catégories
+        rotate fleche reset
+
+    si clic sur une rep 
+        masquer les catégories
+        rotate fleche reset
+        afficher la rep dans le champ
+
+*/
+
 
 // Écriture du choix dans le champ
 allLi.forEach(aLi => {
