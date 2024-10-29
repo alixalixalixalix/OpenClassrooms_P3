@@ -45,6 +45,23 @@ function generatorWorks(works){
 
         imageBalise.src = worksImg
         figcaptionBalise.innerText = worksTitle
+
+        // apparition dans la modale
+        let modaleEditionList = document.querySelector(".modaleEdition-list")
+        let modaleEditionCard = document.createElement("div")
+        let modaleEditionCardImg = document.createElement("img")
+        let modaleEditionCardTrash = document.createElement("img")
+
+        modaleEditionCardImg.src = works[i].imageUrl
+        modaleEditionCardImg.classList.add("imgProjet")
+
+        modaleEditionCardTrash.src = "assets/icons/trash.png";
+        
+        modaleEditionList.appendChild(modaleEditionCard)
+        modaleEditionCard.appendChild(modaleEditionCardImg)
+        modaleEditionCard.appendChild(modaleEditionCardTrash)
+        modaleEditionCard.classList.add("modaleEdition-card")
+        modaleEditionCardTrash.classList.add("trash")
     }
 }
 
@@ -168,14 +185,6 @@ backModale.addEventListener("click", function(){
 })
 
 // pas de déplacement du container quand ouverture dropdown
-// changement de couleur du bouton valider si img + titre + catégorie renseignée
-// quand connecté, login devient logout et permet la déconnexion
-
-/*
-if(tagChoix != '' || addPhotoSelectTitre != ''){
-    buttonModaleAddPhoto.classList.add(".buttonModaleActive")
-}
-*/
 
 // DROPDOWN OPEN/CLOSE
 addPhotoSelectTagInput.addEventListener("click", function(){
@@ -200,19 +209,43 @@ allLi.forEach(aLi => {
 })
 
 
+let fileButton = document.querySelector("#file-button")
+let fileButtonFormat = document.querySelector(".file-button-format")
+let removeFile = document.querySelector(".removeFile")
 
+// Le format prend le nom du fichier chargé
+fileButton.addEventListener("change", function(event){
+    const fileNameUser = event.target.files[0];
+    if(fileNameUser){
+        fileButtonFormat.innerText = fileNameUser.name
+        fileButtonFormat.style.color = "#1D6154"
+        // Si les 2 autres champs sont remplis, le bouton devient actif
+        if(addPhotoSelectTitre.value != '' && tagChoix.innerText != ''){
+            buttonModaleAddPhoto.style.backgroundColor = "#1D6154"
+        }
+    }
+})
 
+// On écoute le changement sur le titre
+addPhotoSelectTitre.addEventListener("change", function(event){
+    // Si les 2 autres champs sont remplis, le bouton devient actif
+    if(fileButton.value != '' && tagChoix.innerText != ''){
+        buttonModaleAddPhoto.style.backgroundColor = "#1D6154"
+    }
+})
 
+// On écoute le changement sur la catégorie
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if(mutation.type === 'childList' || mutation.type === "characterData"){
+            if(fileButton.value != '' && addPhotoSelectTitre.value != ''){
+                buttonModaleAddPhoto.style.backgroundColor = "#1D6154"
+            }}
+    })
+})
 
-
-
-
-/*
-
-1. clic pour ouvrir dropdown OK
-2. la flèche se retourne OK
-2. si clic sur une réponse > l'affiche dans le champ 
-3. si clic sur autre chose > ferme le dropdown
-
-
-*/
+observer.observe(tagChoix, {
+    childList: true,        // Observe les ajouts et suppressions de nœuds enfants
+    subtree: true,          // Observe les modifications dans les nœuds descendants
+    characterData : true
+})

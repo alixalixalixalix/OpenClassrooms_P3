@@ -85,73 +85,7 @@
 			</div>
 			<div class="modaleEdition-gallery">
 				<h3>Galerie photo</h3>
-				<div class="modaleEdition-listimg">
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>
-					<div class="modaleEdition-card">
-						<img src="assets/images/abajour-tahina.png" class="imgProjet">
-						<a class="blocDelete" href="#">
-							<img src="assets/icons/trash.png">
-						</a>
-					</div>				
+				<div class="modaleEdition-list">
 				</div>
 				<hr>
 				<button>Ajouter une photo</button>
@@ -160,9 +94,15 @@
 				<h3>Ajout photo</h3>
 				<form>
 					<div class="blocFile">
-						<img src="assets/icons/jpg.png">
-						<input type="file" name="file">
-						<p>jpg, png : 4mo max</p>
+						<input type="file" name="file" id="file-button">
+						<label for="file-button">
+							<img class="file-img" src="assets/icons/jpg.png">
+							<p class="file-button-add">+ Ajouter photo</p>		
+							<div class="file-button-div">				
+								<img class="removeFile" src="assets/icons/close.png">
+								<p class="file-button-format">jpg, png : 4mo max</p>
+							</div>
+						</label>
 					</div>
 					<label>Titre</label>
 					<input type="text" name="title" class="addPhoto-selectTitre">

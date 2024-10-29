@@ -267,6 +267,7 @@ label {
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width:100%;
 }
 
 input[type="submit"]{
@@ -387,7 +388,7 @@ footer nav ul {
 				display:inline-block;
 			}
 
-			.modaleEdition-listimg {
+			.modaleEdition-list {
 				margin:auto;
 				display:grid;
 				grid-template-columns: 77px 77px 77px 77px 77px;
@@ -400,27 +401,24 @@ footer nav ul {
 					background-color: pink;
 					display:flex;
 					justify-content: end;
+					position:relative;
 				}
 
 					.imgProjet {
 						width:100%;
 					}
 
-					.blocDelete {
-						background-color: black;
-						width:17px;
-						height:17px;
-						margin:5px;
-						display: flex;
-						justify-content: center;
-						align-items: center;
+					.trash {
 						position:absolute;
-					}
-
-					.blocDelete img {
 						width:9px;
 						height:11px;
+						padding: 3px 4px 3px 4px;
+						margin:5px;
+						right:0;
 						align-items: center;
+						border-radius: 2px;
+						background-color: black;
+						cursor: pointer;
 					}
 
 				.modaleEdition hr {
@@ -433,7 +431,7 @@ footer nav ul {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
-				font-size:16px;
+				font-size:14px;
 				padding: 9px 49px 9px 49px;
 				cursor:pointer;
 				color: white;
@@ -446,7 +444,7 @@ footer nav ul {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
-				font-size:16px;
+				font-size:14px;
 				padding: 9px 49px 9px 49px;
 				cursor:pointer;
 				color: white;
@@ -464,25 +462,61 @@ footer nav ul {
 				display:none;
 			}
 
-
 			.modaleEdition form {
 				padding: 0px 105px 0px 105px;
 				margin-top: 0px;
 				font-size: 14px;
 			}
 
-			.blocFile {
-				width:420px;
-				height:169px;
-				padding-top: 13px;
-				padding-bottom: 19px;
-				background-color: var(--file-blue);
-			}
+				.blocFile input {
+					display: none;
+				}
 
-			.blocFile img {
-				width:76px;
-				height:76px;
-			}
+				.blocFile label {
+					width:420px;
+					margin:0;
+					padding-top: 13px;
+					padding-bottom: 19px;
+					background-color: var(--file-blue);
+					text-align: center;
+					border-radius: 3px;
+					cursor: pointer;
+				}
+
+				.file-img {
+					display: block;
+					margin:auto;
+					width:76px;
+					height:76px;
+					align-items: center;
+				}
+
+				.file-button-div {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+
+				.removeFile {
+					display: none;
+					width:12px;
+					margin-right: 6px;
+				}
+
+				.file-button-add {
+					display: inline-block;
+					border-radius: 50px;
+					padding: 10px 33px 10px 33px;
+					background-color: #CBD6DC;
+					color: #306685;
+					margin: 7px 0px 7px 0px;
+				}
+
+				.file-button-format {
+					font-size: 10px;
+					display:inline;
+					color: #444444
+				}
 
 			.input-file {
 				display:none;
@@ -506,6 +540,7 @@ footer nav ul {
 
 				.addPhoto-selectTitre {
 					padding-left:16px;
+					width: 402px;
 					font-size:14px;
 					font-family: 'Work Sans' ;
 				}
