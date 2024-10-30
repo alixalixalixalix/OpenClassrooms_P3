@@ -20,34 +20,31 @@ if(token){ // si oui
 formLogin.addEventListener("submit", async function(event){
     event.preventDefault()
     
-        let demandeLogin = await fetch("http://localhost:5678/api/users/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: userEmail.value,
-                password: userPassword.value
-            })
-        })   
+    let demandeLogin = await fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            email: userEmail.value,
+            password: userPassword.value
+        })
+    })   
 
-        if (demandeLogin.ok){
-            const data = await demandeLogin.json();
-            const token = data.token; // on récupère le token
-    
-            window.localStorage.setItem("token", token) // on stocke le token dans le localsto
-          
-            document.location.href = "index.html"
-            let navLog = document.querySelectorAll("li")
-            navLog[2].innerText = "logout"
-        } else {
-            let messageError = document.createElement("p")
-            messageError.innerText = "Erreur dans l’identifiant ou le mot de passe."
-            messageError.classList.add("loginError")
-            formPassword.appendChild(messageError)
-        }
+    if (demandeLogin.ok){
+        const data = await demandeLogin.json();
+        const token = data.token; // on récupère le token
+
+        window.localStorage.setItem("token", token) // on stocke le token dans le localsto
+        
+        document.location.href = "index.html"
+        let navLog = document.querySelectorAll("li")
+        navLog[2].innerText = "logout"
+    } else {
+        let messageError = document.createElement("p")
+        messageError.innerText = "Erreur dans l’identifiant ou le mot de passe."
+        messageError.classList.add("loginError")
+        formPassword.appendChild(messageError)
+    }
 })
-
-
-
 
 
 // Bold sur le bouton login dans la nav

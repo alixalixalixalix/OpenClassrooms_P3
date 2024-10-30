@@ -243,6 +243,10 @@ form {
 	flex-direction: column;
 }
 
+.div-btn-form {
+	margin:auto
+}
+
 .formEmail, .formPassword {
 	display:block;
 }
@@ -253,7 +257,7 @@ form {
 	text-align: left;
 }
 
-input, select, .addPhoto-selectTag-input {
+#contact input, select, .addPhoto-selectTag-input, .addPhoto-selectTitre, .formLogin input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -271,7 +275,7 @@ label {
 	width:100%;
 }
 
-input[type="submit"]{
+#contact input[type="submit"], .formLogin input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -441,7 +445,7 @@ footer nav ul {
 				border:0px;
 			}
 
-			.modale-addPhoto button {
+			.div-btn-form input {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
@@ -452,6 +456,7 @@ footer nav ul {
 				background-color: var(--button-inactive);
 				margin-bottom: 45px;
 				border:0px;
+				cursor: not-allowed;
 			}		
 			
 			.buttonModaleActive {
