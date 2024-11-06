@@ -100,7 +100,7 @@ table {
 
 .edition-projets {
 	display: flex;;
-	padding-left: 31px;
+	margin-left: 31px;
 	align-items: center;
 	cursor: pointer;
 	display:none; /**/
@@ -257,13 +257,15 @@ form {
 	text-align: left;
 }
 
-#contact input, select, .addPhoto-selectTag-input, .addPhoto-selectTitre, .formLogin input {
+#contact input[type="text"], #contact input[type="email"], .addPhoto-selectTag-input, .addPhoto-selectTitre, .formLogin input[type="email"], .formLogin input[type="password"], .input-category {
 	height: 50px;
-	font-size: 1.2em;
+	font-size: 14px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	width: 100%;
+	font-family: 'Work sans';
 }
+
 label {
 	margin: 2em 0 1em 0;
 	text-align: left;
@@ -285,6 +287,10 @@ label {
 	text-align: center;
 	border-radius: 60px ;
 	cursor: pointer;
+	padding: 9px 0 9px 0;
+	border:none;
+	font-size: 14px;
+
 }
 
 footer nav ul {
@@ -437,12 +443,13 @@ footer nav ul {
 				border-radius: 50px;
 				font-family: 'Syne';
 				font-size:14px;
-				padding: 9px 49px 9px 49px;
+				padding: 9px 0 9px 0;
 				cursor:pointer;
 				color: white;
 				background-color: var(--main-color);
 				margin-bottom: 45px;
 				border:0px;
+				width:236px;
 			}
 
 			.div-btn-form input {
@@ -450,13 +457,14 @@ footer nav ul {
 				border-radius: 50px;
 				font-family: 'Syne';
 				font-size:14px;
-				padding: 9px 49px 9px 49px;
+				padding: 9px 0 9px 0;
 				cursor:pointer;
 				color: white;
 				background-color: var(--button-inactive);
 				margin-bottom: 45px;
 				border:0px;
 				cursor: not-allowed;
+				width:236px;
 			}		
 			
 			.buttonModaleActive {
@@ -528,6 +536,44 @@ footer nav ul {
 				display:none;
 			}
 
+			.addPhoto-selectTitre {
+				padding-left:16px;
+				width: 402px;
+				font-size:14px;
+				font-family: 'Work Sans' ;
+			}
+
+			.input-category {
+				display:flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+				.input-category select {
+					padding-left: 16px;
+					font-size: 14px;
+					font-family: 'Work Sans' ;
+					text-decoration: none;
+					border: none;
+					appearance: none;
+					width:100%;
+					height: 100%;
+				}
+
+				.category-arrow img {
+					width:10px;
+					height:6px;
+					margin-left: -29px;
+					transition: rotate 1s;
+				}
+
+					option {
+						font-family: 'Work Sans';
+						font-size: 24px;
+					}
+
+
+/*			
 			.addPhoto-selectTag-input {
 				display:flex;
 				justify-content: space-between;
@@ -541,13 +587,6 @@ footer nav ul {
 					height:6px;
 					margin-right: 29px;
 					transition: rotate 1s;
-				}
-
-				.addPhoto-selectTitre {
-					padding-left:16px;
-					width: 402px;
-					font-size:14px;
-					font-family: 'Work Sans' ;
 				}
 
 				.addPhoto-selectTag-input p {
@@ -577,4 +616,6 @@ footer nav ul {
 
 			.menu-close {
 				display:none;
-			}
+			}				
+
+*/
