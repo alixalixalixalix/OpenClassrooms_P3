@@ -30,7 +30,7 @@ let buttonAppartements = document.querySelector(".filters-appartements");
 let buttonHotels = document.querySelector(".filters-hotels");
 
 function generatorWorks(works) {
-  let gallery = document.querySelector(".gallery");
+  let gallery = document.getElementById("gallery");
   let modaleList = document.querySelector(".modale-list");
   gallery.innerHTML = '';
   modaleList.innerHTML = '';
@@ -76,7 +76,7 @@ buttonTous.addEventListener("click", function () {
   let filtersTous = works.filter(function (work) {
     return work.categoryId >= 0;
   });
-  document.querySelector(".gallery").innerHTML = "";
+  document.querySelector("#gallery").innerHTML = "";
   generatorWorks(filtersTous);
 });
 
@@ -84,7 +84,7 @@ buttonObjets.addEventListener("click", function () {
   let filtersObjets = works.filter(function (work) {
     return work.categoryId === 1;
   });
-  document.querySelector(".gallery").innerHTML = "";
+  document.querySelector("#gallery").innerHTML = "";
   generatorWorks(filtersObjets);
 });
 
@@ -92,7 +92,7 @@ buttonAppartements.addEventListener("click", function () {
   let filtersAppartements = works.filter(function (work) {
     return work.categoryId === 2;
   });
-  document.querySelector(".gallery").innerHTML = "";
+  document.querySelector("#gallery").innerHTML = "";
   generatorWorks(filtersAppartements);
 });
 
@@ -100,7 +100,7 @@ buttonHotels.addEventListener("click", function () {
   let filtersHotels = works.filter(function (work) {
     return work.categoryId === 3;
   });
-  document.querySelector(".gallery").innerHTML = "";
+  document.querySelector("#gallery").innerHTML = "";
   generatorWorks(filtersHotels);
 });
 //
@@ -125,23 +125,23 @@ let allModaleCard = document.querySelectorAll(".modale-card");
 
 for(let i = 0 ; i < allTrash.length ; i++){
   allTrash[i].addEventListener("click", function () {
-    //allModaleCard[i].style.display = "none";
 
-    let demandeDelete = fetch(`http://localhost:5678/api/works/${allTrash[i].id}`, {
+    fetch(`http://localhost:5678/api/works/${allTrash[i].id}`, {
       method: "DELETE",
       headers: { 
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
        },
+    }).then((response) => { 
+
+      if(response.ok) {
+        works.splice([i], 1);
+        generatorWorks(works);
+        console.log("c tout bon")
+      }else {
+        console.log("c loupé")
+      }
     })
-
-    generatorWorks(works);
-
-    if(demandeDelete.ok) {
-      console.log("c ok")
-    }else {
-      console.log("c raté")
-    }
   });    
 }
 

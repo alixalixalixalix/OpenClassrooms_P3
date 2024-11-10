@@ -28,6 +28,12 @@ let buttonModaleAddPhoto = document.querySelector(".div-btn-form input");
 
 let body = document.querySelector("body");
 
+let blocFileLabel = document.querySelector(".blocFile label")
+let blocFileImg = document.querySelector(".blocFile label img")
+let blocFileP = document.querySelector(".blocFile label p")
+let blocFileDiv = document.querySelector(".blocFile label div")
+let imgAjout = document.createElement("img")
+
 // Modale ouverture étape 1/2
 editionProjets.addEventListener("click", function () {
   modale.style.display = "flex";
@@ -56,9 +62,8 @@ function closeModale() {
   addPhotoSelect.value = "";
   addPhotoFile.value = "";
   //tagChoix.innerText = "";
-  fileButtonFormat.innerText = "jpg, png : 4mo max";
-  fileButtonFormat.style.color = "#444444";
   body.style.overflow = "scroll";
+  imgAjout.src = ''
   btnDisactiv();
 }
 
@@ -67,6 +72,9 @@ buttonModaleGallery.addEventListener("click", function () {
   modaleGallery.style.display = "none";
   modaleAddPhoto.style.display = "block";
   btnBackModale.style.display = "block";
+  blocFileImg.style.display = "block";
+  blocFileP.style.display = "inline-block";
+  blocFileDiv.style.display = "block";
 });
 
 // Retour sur modale 1/2
@@ -74,6 +82,11 @@ btnBackModale.addEventListener("click", function () {
   modaleGallery.style.display = "block";
   modaleAddPhoto.style.display = "none";
   btnBackModale.style.display = "none";
+  addPhotoTitre.value = "";
+  addPhotoSelect.value = "";
+  addPhotoFile.value = "";
+  imgAjout.src = ''
+  btnDisactiv();
 });
 
 function btnActiv() {
@@ -98,36 +111,21 @@ formAddPhoto.addEventListener("change", function (event) {
   }
 });
 
-// Si img 
+// Affichage img après chargement de l'input
 addPhotoFile.addEventListener("change", function (event) {
-  let blocFileLabel = document.querySelector(".blocFile label")
-  let blocFileImg = document.querySelector(".blocFile label img")
-  let blocFileP = document.querySelector(".blocFile label p")
-  let blocFileDiv = document.querySelector(".blocFile label div")
   blocFileImg.style.display = "none";
   blocFileP.style.display = "none";
   blocFileDiv.style.display = "none";
 
-  const fileNameUser = event.target.files[0];
+  const fileNameUser = event.target.files[0]; // On cible l'image insérée
+  const previewURL = URL.createObjectURL(fileNameUser); // On génère une url temporaire pour afficher l'img
 
-  let imgAjout = document.createElement("img")
   blocFileLabel.appendChild(imgAjout)
-  imgAjout.src = fileNameUser.name
-  imgAjout.style.height = "166px"
-  
+  imgAjout.src = previewURL
+  imgAjout.style.height = "100%"
 })
 
 /*
-// Le format prend le nom du fichier chargé
-addPhotoFile.addEventListener("change", function (event) {
-  const fileNameUser = event.target.files[0];
-  if (fileNameUser) {
-    fileButtonFormat.innerText = fileNameUser.name;
-    fileButtonFormat.style.color = "#1D6154";
-  }
-});
-*/
-
 // Formulaire ajout projet
 formAddPhoto.addEventListener("submit", async function (event) {
   event.preventDefault();
@@ -154,9 +152,9 @@ formAddPhoto.addEventListener("submit", async function (event) {
   let token = window.localStorage.getItem("token");
 
   let formData = new FormData();
-  formData.append("imageUrl", addPhotoFile.files[0]);
+  formData.append("image", addPhotoFile.files[0]);
   formData.append("title", addPhotoTitre.value);
-  formData.append("categoryId", category); // parseint inutile
+  formData.append("category", category); // parseint inutile
 
   let sendProject = await fetch("http://localhost:5678/api/works", {
     method: "POST",
@@ -170,103 +168,51 @@ formAddPhoto.addEventListener("submit", async function (event) {
     console.log("échec");
   }
 });
+*/
+
+// Gestion des catégories
+const fetchCategory = await fetch("http://localhost:5678/api/categories");
+const responseCategory = await fetchCategory.json();
+
+// on déclare les options du select
+let selectOption1 = document.getElementById("option1")
+let selectOption2 = document.getElementById("option2")
+let selectOption3 = document.getElementById("option3")
+
+// on leur donne la valeur (nombre)
+selectOption1.value = responseCategory[0].id
+selectOption2.value = responseCategory[1].id
+selectOption3.value = responseCategory[2].id
+
+// on écrit le nom de la catégorie dans le select
+selectOption1.innerText = responseCategory[0].name
+selectOption2.innerText = responseCategory[1].name
+selectOption3.innerText = responseCategory[2].name
 
 
-/*
-// Dropdown open close
-addPhotoSelectTagInput.addEventListener("click", function () {
-  console.log(addPhotoSelectTagResponse.style.display)
-  if (addPhotoSelectTagResponse.style.display == "block") {
-    console.log("FERMÉ");
-    closeDropdown();
-  } else {
-    console.log("OUVERT");
-    openDropdown();
-  }
-});
-
-function openDropdown() {
-  addPhotoSelectTagResponse.style.display = "block";
-  tagImg.style.transform = "rotate(180deg)";
-}
-
-function closeDropdown() {
-  addPhotoSelectTagResponse.style.display = "none";
-  tagImg.style.transform = "rotate(0deg)";
-}
-
-// Écriture du choix dans le champ
-allLi.forEach((aLi) => {
-  aLi.addEventListener("click", function () {
-    let responseClicked = aLi.innerText;
-    tagChoix.innerText = responseClicked;
-    addPhotoSelectTagResponse.style.display = "none";
-    tagImg.style.transform = "rotate(0deg)";
-  });
-});
-
-buttonModaleAddPhoto.disabled = true;
-
-// SUPPR ^ // AFFICHER L'IMG CHARGÉE À LA PLACE DU BLOC DROPFILE
-
-// On écoute le changement sur le titre
-addPhotoTitre.addEventListener("change", function (event) {
-  // Si les 2 autres champs sont remplis, le bouton devient actif
-  if (addPhotoFile.value != "" && tagChoix.innerText != "") {
-    btnActiv();
-  } else {
-    btnDisactiv();
-  }
-});
-
-// On écoute le changement sur la catégorie
-const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    if (mutation.type === "childList" || mutation.type === "characterData") {
-      if (addPhotoFile.value != "" && addPhotoTitre.value != "") {
-        btnActiv();
-      } else {
-        btnDisactiv();
-      }
-    }
-  });
-});
-
-observer.observe(tagChoix, {
-  childList: true, // Observe les ajouts et suppressions de nœuds enfants
-  subtree: true, // Observe les modifications dans les nœuds descendants
-  characterData: true,
-});
-
-// Création nouveau projet
-
-let formAddProject = document.querySelector(".modale-addPhoto form");
-
-formAddProject.addEventListener("submit", async function (event) {
+// Formulaire ajout projet
+formAddPhoto.addEventListener("submit", async function (event) {
   event.preventDefault();
-  closeModale();
+
+  let userSelectOption = addPhotoSelect.value // On récupère la catégorie (number) choisie
 
   let token = window.localStorage.getItem("token");
-  console.log(tagChoix.innerText);
 
-  let creaProject = await fetch("http://localhost:5678/api/works", {
+  let formData = new FormData();
+  formData.append("image", addPhotoFile.files[0]);
+  formData.append("title", addPhotoTitre.value);
+  formData.append("category", userSelectOption);
+
+  let sendProject = await fetch("http://localhost:5678/api/works", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      image: addPhotoFile.value,
-      title: addPhotoTitre.value,
-      categorie: tagChoix.innerText,
-    }),
-  });
+    headers: {"Authorization": `Bearer ${token}`},
+    body: formData,
+    });
 
-  if (creaProject.ok) {
+  if (sendProject.ok) {
     console.log("requête reçueeeee !!");
+    closeModale();
   } else {
     console.log("échec");
   }
 });
-
-*/
