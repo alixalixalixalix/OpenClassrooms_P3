@@ -572,6 +572,11 @@ footer nav ul {
 						font-family: 'Work Sans';
 						font-size: 24px;
 					}
+			
+			.div-msg-error {
+				margin-top:16px;
+				color:red;
+			}
 
 
 /*			

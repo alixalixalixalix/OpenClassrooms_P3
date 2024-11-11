@@ -22,18 +22,18 @@ if (token) {
 }
 
 const reponseWorks = await fetch("http://localhost:5678/api/works");
-const works = await reponseWorks.json();
+export const works = await reponseWorks.json();
 
 let buttonTous = document.querySelector(".filters-tous");
 let buttonObjets = document.querySelector(".filters-objets");
 let buttonAppartements = document.querySelector(".filters-appartements");
 let buttonHotels = document.querySelector(".filters-hotels");
 
-function generatorWorks(works) {
+export function generatorWorks(works) {
   let gallery = document.getElementById("gallery");
   let modaleList = document.querySelector(".modale-list");
-  gallery.innerHTML = '';
-  modaleList.innerHTML = '';
+  gallery.innerHTML = "";
+  modaleList.innerHTML = "";
 
   for (let i = 0; i < works.length; i++) {
     let worksImg = works[i].imageUrl;
@@ -55,7 +55,7 @@ function generatorWorks(works) {
     let modaleCard = document.createElement("div");
     let modaleCardImg = document.createElement("img");
     let modaleCardTrash = document.createElement("img");
-    modaleCardTrash.id = worksId
+    modaleCardTrash.id = worksId;
 
     modaleCardImg.src = works[i].imageUrl;
     modaleCardImg.classList.add("imgProjet");
@@ -70,6 +70,7 @@ function generatorWorks(works) {
   }
 }
 
+generatorWorks(works);
 
 // boutons de filtres
 buttonTous.addEventListener("click", function () {
@@ -105,8 +106,6 @@ buttonHotels.addEventListener("click", function () {
 });
 //
 
-generatorWorks(works);
-
 // bouton filtres UI
 let allButtonsFilters = document.querySelectorAll(".filters-button");
 
@@ -121,27 +120,31 @@ allButtonsFilters.forEach((aButtonFilters) => {
 
 // suppression projet
 let allTrash = document.querySelectorAll(".trash");
-let allModaleCard = document.querySelectorAll(".modale-card");
 
-for(let i = 0 ; i < allTrash.length ; i++){
-  allTrash[i].addEventListener("click", function () {
+function addTrashEventListener() {
+  for (let i = 0; i < allTrash.length; i++) {
+    allTrash[i].addEventListener("click", function () {
+      console.log(i);
 
-    fetch(`http://localhost:5678/api/works/${allTrash[i].id}`, {
-      method: "DELETE",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-       },
-    }).then((response) => { 
-
-      if(response.ok) {
-        works.splice([i], 1);
-        generatorWorks(works);
-        console.log("c tout bon")
-      }else {
-        console.log("c loupé")
-      }
-    })
-  });    
+      fetch(`http://localhost:5678/api/works/${allTrash[i].id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        if (response.ok) {
+          works.splice([i], 1);
+          generatorWorks(works);
+          console.log("Fichier supprimé");
+          allTrash = document.querySelectorAll(".trash");
+          addTrashEventListener()
+        } else {
+          console.log("Erreur dans la suppression");
+        }
+      });
+    });
+  }
 }
 
+addTrashEventListener()

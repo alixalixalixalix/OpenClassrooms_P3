@@ -1,23 +1,14 @@
+import { generatorWorks } from "./projects.js"
+import { works } from "./projects.js"
+
 let editionProjets = document.querySelector(".edition-projets");
 let modale = document.querySelector(".modale");
 let btnCloseModale = document.querySelector(".modale-close");
 let btnBackModale = document.querySelector(".modale-back");
 
-let addPhotoSelectTagInput = document.querySelector(
-  ".addPhoto-selectTag-input"
-);
-let tagImg = document.querySelector(".addPhoto-selectTag-input img");
-let addPhotoSelectTagResponse = document.querySelector(
-  ".addPhoto-selectTag-response"
-);
-let tagChoix = document.querySelector(".addPhoto-selectTag-input p");
-let allLi = document.querySelectorAll(".addPhoto-selectTag-response li");
 let addPhotoTitre = document.querySelector(".addPhoto-selectTitre");
 let addPhotoSelect = document.querySelector(".modale-addPhoto select");
 let addPhotoFile = document.querySelector("#file-button");
-
-let fileButtonFormat = document.querySelector(".file-button-format");
-let removeFile = document.querySelector(".removeFile");
 
 let modaleContainer = document.querySelector(".modale-container");
 let modaleGallery = document.querySelector(".modale-gallery");
@@ -33,6 +24,7 @@ let blocFileImg = document.querySelector(".blocFile label img")
 let blocFileP = document.querySelector(".blocFile label p")
 let blocFileDiv = document.querySelector(".blocFile label div")
 let imgAjout = document.createElement("img")
+let divMessageError = document.querySelector(".div-msg-error")
 
 // Modale ouverture étape 1/2
 editionProjets.addEventListener("click", function () {
@@ -64,6 +56,7 @@ function closeModale() {
   //tagChoix.innerText = "";
   body.style.overflow = "scroll";
   imgAjout.src = ''
+  divMessageError.innerHTML = ''
   btnDisactiv();
 }
 
@@ -86,6 +79,7 @@ btnBackModale.addEventListener("click", function () {
   addPhotoSelect.value = "";
   addPhotoFile.value = "";
   imgAjout.src = ''
+  divMessageError.innerHTML = ''
   btnDisactiv();
 });
 
@@ -125,51 +119,6 @@ addPhotoFile.addEventListener("change", function (event) {
   imgAjout.style.height = "100%"
 })
 
-/*
-// Formulaire ajout projet
-formAddPhoto.addEventListener("submit", async function (event) {
-  event.preventDefault();
-//  closeModale();
-
-  let options = document.querySelectorAll("option") // On déclare les 3 options de catégorie
-  let category = addPhotoSelect.value // On récupère la catégorie choisie
-
-  // Si category = "objets"
-  if (category === options[1].value) {
-    category = 1;
-  }
-
-  // Si category = "appartements"
-  if (category === options[2].value) {
-    category = 2;
-  }
-
-  // Si category = "hotels"
-  if (category === options[3].value) {
-    category = 3;
-  }
-
-  let token = window.localStorage.getItem("token");
-
-  let formData = new FormData();
-  formData.append("image", addPhotoFile.files[0]);
-  formData.append("title", addPhotoTitre.value);
-  formData.append("category", category); // parseint inutile
-
-  let sendProject = await fetch("http://localhost:5678/api/works", {
-    method: "POST",
-    headers: {"Authorization": `Bearer ${token}`},
-    body: formData,
-    });
-
-  if (sendProject.ok) {
-    console.log("requête reçueeeee !!");
-  } else {
-    console.log("échec");
-  }
-});
-*/
-
 // Gestion des catégories
 const fetchCategory = await fetch("http://localhost:5678/api/categories");
 const responseCategory = await fetchCategory.json();
@@ -203,16 +152,49 @@ formAddPhoto.addEventListener("submit", async function (event) {
   formData.append("title", addPhotoTitre.value);
   formData.append("category", userSelectOption);
 
-  let sendProject = await fetch("http://localhost:5678/api/works", {
+  fetch(`http://localhost:5678/api/works`, {
     method: "POST",
     headers: {"Authorization": `Bearer ${token}`},
     body: formData,
-    });
-
-  if (sendProject.ok) {
-    console.log("requête reçueeeee !!");
+  }).then((response) => {
+    if(response.ok) {
+      return response.json(); // Récupérer la réponse JSON si l'API renvoie le nouvel objet
+    }
+  }).then((newWork) => {
+    // Ici, newWork est le nouveau projet ajouté, ou la réponse de l'API après l'ajout
+    works.push(newWork); // Ajouter ce nouveau projet dans la liste existante
+    generatorWorks(works);
     closeModale();
-  } else {
-    console.log("échec");
-  }
+    console.log("Fichier bien ajouté");
+  }).catch((error) => {
+    console.log(error.message);
+    let messageError = document.createElement("p")
+    messageError.innerText = "Tous les champs ne sont pas correctement remplis";
+    divMessageError.appendChild(messageError);
+  });
 });
+
+
+
+
+
+/* 
+
+  fetch(`http://localhost:5678/api/works`, {
+    method: "POST",
+    headers: {"Authorization": `Bearer ${token}`},
+    body: formData,
+    }).then((response) => {
+      if(response.ok) {
+        closeModale();
+        generatorWorks(works);
+        console.log("Fichier bien ajouté");
+      } else {
+        console.log("Erreur dans l'ajout du fichier");
+        let messageError = document.createElement("p")
+        messageError.innerText = "Tous les champs ne sont pas correctement rempli"
+        divMessageError.appendChild(messageError)
+      }
+    })
+
+*/
