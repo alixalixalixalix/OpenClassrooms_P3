@@ -1,17 +1,16 @@
 // on vérifie si il y a le token dans le localstorage
 let token = window.localStorage.getItem("token");
 if (token) {
-  // si oui
-  // dans la nav on modifie le login par logout
-  let linkLogin = document.querySelector("#link-login");
+  // si token existe, dans la nav on modifie le login par logout
+  let linkLogin = document.getElementById("link-login");
   linkLogin.innerText = "logout";
 
   // on fait apparaitre la topbar edition
-  let editionTopbar = document.querySelector(".edition-topbar");
+  let editionTopbar = document.getElementById("edition-topbar");
   editionTopbar.style.display = "flex";
 
   // on fait apparaitre le modifier dans les projets
-  let editionProjets = document.querySelector(".edition-projets");
+  let editionProjets = document.getElementById("edition-projets");
   editionProjets.style.display = "flex";
 
   // au clic sur logout, on se déconnecte
@@ -31,8 +30,8 @@ let buttonHotels = document.querySelector(".filters-hotels");
 
 export function generatorWorks(works) {
   let gallery = document.getElementById("gallery");
-  let modaleList = document.querySelector(".modale-list");
   gallery.innerHTML = "";
+  let modaleList = document.getElementById("modale-list");
   modaleList.innerHTML = "";
 
   for (let i = 0; i < works.length; i++) {
@@ -77,7 +76,7 @@ buttonTous.addEventListener("click", function () {
   let filtersTous = works.filter(function (work) {
     return work.categoryId >= 0;
   });
-  document.querySelector("#gallery").innerHTML = "";
+  document.getElementById("gallery").innerHTML = "";
   generatorWorks(filtersTous);
 });
 
@@ -85,7 +84,7 @@ buttonObjets.addEventListener("click", function () {
   let filtersObjets = works.filter(function (work) {
     return work.categoryId === 1;
   });
-  document.querySelector("#gallery").innerHTML = "";
+  document.getElementById("gallery").innerHTML = "";
   generatorWorks(filtersObjets);
 });
 
@@ -93,7 +92,7 @@ buttonAppartements.addEventListener("click", function () {
   let filtersAppartements = works.filter(function (work) {
     return work.categoryId === 2;
   });
-  document.querySelector("#gallery").innerHTML = "";
+  document.getElementById("gallery").innerHTML = "";
   generatorWorks(filtersAppartements);
 });
 
@@ -101,7 +100,7 @@ buttonHotels.addEventListener("click", function () {
   let filtersHotels = works.filter(function (work) {
     return work.categoryId === 3;
   });
-  document.querySelector("#gallery").innerHTML = "";
+  document.getElementById("gallery").innerHTML = "";
   generatorWorks(filtersHotels);
 });
 //
@@ -138,7 +137,7 @@ function addTrashEventListener() {
           generatorWorks(works);
           console.log("Fichier supprimé");
           allTrash = document.querySelectorAll(".trash");
-          addTrashEventListener()
+          addTrashEventListener();
         } else {
           console.log("Erreur dans la suppression");
         }
@@ -147,4 +146,4 @@ function addTrashEventListener() {
   }
 }
 
-addTrashEventListener()
+addTrashEventListener();

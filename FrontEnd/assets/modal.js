@@ -1,30 +1,30 @@
 import { generatorWorks } from "./projects.js"
 import { works } from "./projects.js"
 
-let editionProjets = document.querySelector(".edition-projets");
-let modale = document.querySelector(".modale");
-let btnCloseModale = document.querySelector(".modale-close");
-let btnBackModale = document.querySelector(".modale-back");
+let editionProjets = document.getElementById("edition-projets");
+let modale = document.getElementById("modale");
+let btnCloseModale = document.getElementById("modale-close");
+let btnBackModale = document.getElementById("modale-back");
 
 let addPhotoTitre = document.querySelector(".addPhoto-selectTitre");
-let addPhotoSelect = document.querySelector(".modale-addPhoto select");
-let addPhotoFile = document.querySelector("#file-button");
+let addPhotoSelect = document.querySelector("#modale-addPhoto select");
+let addPhotoFile = document.getElementById("file-button");
 
-let modaleContainer = document.querySelector(".modale-container");
-let modaleGallery = document.querySelector(".modale-gallery");
-let modaleAddPhoto = document.querySelector(".modale-addPhoto");
-let formAddPhoto = document.querySelector(".modale-addPhoto form");
-let buttonModaleGallery = document.querySelector(".modale-gallery button");
-let buttonModaleAddPhoto = document.querySelector(".div-btn-form input");
+let modaleContainer = document.getElementById("modale-container");
+let modaleGallery = document.getElementById("modale-gallery");
+let modaleAddPhoto = document.getElementById("modale-addPhoto");
+let formAddPhoto = document.querySelector("#modale-addPhoto form");
+let buttonModaleGallery = document.querySelector("#modale-gallery button");
+let buttonModaleAddPhoto = document.querySelector("#div-btn-form input");
 
 let body = document.querySelector("body");
 
-let blocFileLabel = document.querySelector(".blocFile label")
-let blocFileImg = document.querySelector(".blocFile label img")
-let blocFileP = document.querySelector(".blocFile label p")
-let blocFileDiv = document.querySelector(".blocFile label div")
-let imgAjout = document.createElement("img")
-let divMessageError = document.querySelector(".div-msg-error")
+let blocFileLabel = document.querySelector("#blocFile label")
+let blocFileImg = document.querySelector("#blocFile label img")
+let blocFileP = document.querySelector("#blocFile label p")
+let blocFileDiv = document.querySelector("#blocFile label div")
+let imgLoad = document.createElement("img")
+let divMessageError = document.querySelector("#div-msg-error")
 
 // Modale ouverture étape 1/2
 editionProjets.addEventListener("click", function () {
@@ -53,9 +53,8 @@ function closeModale() {
   addPhotoTitre.value = "";
   addPhotoSelect.value = "";
   addPhotoFile.value = "";
-  //tagChoix.innerText = "";
   body.style.overflow = "scroll";
-  imgAjout.src = ''
+  imgLoad.src = ''
   divMessageError.innerHTML = ''
   btnDisactiv();
 }
@@ -78,7 +77,7 @@ btnBackModale.addEventListener("click", function () {
   addPhotoTitre.value = "";
   addPhotoSelect.value = "";
   addPhotoFile.value = "";
-  imgAjout.src = ''
+  imgLoad.src = ''
   divMessageError.innerHTML = ''
   btnDisactiv();
 });
@@ -114,26 +113,26 @@ addPhotoFile.addEventListener("change", function (event) {
   const fileNameUser = event.target.files[0]; // On cible l'image insérée
   const previewURL = URL.createObjectURL(fileNameUser); // On génère une url temporaire pour afficher l'img
 
-  blocFileLabel.appendChild(imgAjout)
-  imgAjout.src = previewURL
-  imgAjout.style.height = "100%"
+  blocFileLabel.appendChild(imgLoad)
+  imgLoad.src = previewURL
+  imgLoad.style.height = "100%"
 })
 
 // Gestion des catégories
 const fetchCategory = await fetch("http://localhost:5678/api/categories");
 const responseCategory = await fetchCategory.json();
 
-// on déclare les options du select
+// On récupère les attributs options du select
 let selectOption1 = document.getElementById("option1")
 let selectOption2 = document.getElementById("option2")
 let selectOption3 = document.getElementById("option3")
 
-// on leur donne la valeur (nombre)
+// On leur donne la valeur de l'ID de leur catégorie
 selectOption1.value = responseCategory[0].id
 selectOption2.value = responseCategory[1].id
 selectOption3.value = responseCategory[2].id
 
-// on écrit le nom de la catégorie dans le select
+// On écrit le nom de la catégorie dans le select
 selectOption1.innerText = responseCategory[0].name
 selectOption2.innerText = responseCategory[1].name
 selectOption3.innerText = responseCategory[2].name
@@ -142,10 +141,8 @@ selectOption3.innerText = responseCategory[2].name
 // Formulaire ajout projet
 formAddPhoto.addEventListener("submit", async function (event) {
   event.preventDefault();
-
-  let userSelectOption = addPhotoSelect.value // On récupère la catégorie (number) choisie
-
   let token = window.localStorage.getItem("token");
+  let userSelectOption = addPhotoSelect.value // On récupère la catégorie (number) choisie
 
   let formData = new FormData();
   formData.append("image", addPhotoFile.files[0]);
@@ -161,7 +158,7 @@ formAddPhoto.addEventListener("submit", async function (event) {
       return response.json(); // Récupérer la réponse JSON si l'API renvoie le nouvel objet
     }
   }).then((newWork) => {
-    // Ici, newWork est le nouveau projet ajouté, ou la réponse de l'API après l'ajout
+    // newWork est le nouveau projet ajouté, ou la réponse de l'API après l'ajout
     works.push(newWork); // Ajouter ce nouveau projet dans la liste existante
     generatorWorks(works);
     closeModale();

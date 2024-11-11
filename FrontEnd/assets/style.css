@@ -71,7 +71,7 @@ table {
 }
 
 /* MODE EDITION */
-.edition-topbar {
+#edition-topbar {
 	background-color: black;
 	height: 49px;
 	display:none;
@@ -86,7 +86,7 @@ table {
 	margin-right:6px;
 }
 
-.portfolio-header {
+#portfolio-header {
 	display:flex;
 	justify-content: center;
 	align-items: center;
@@ -98,7 +98,7 @@ table {
 	text-align: center;
 }
 
-.edition-projets {
+#edition-projets {
 	display: flex;;
 	margin-left: 31px;
 	align-items: center;
@@ -106,7 +106,7 @@ table {
 	display:none; /**/
 }
 
-.edition-projets p {
+#edition-projets p {
 	display:inline;
 }
 
@@ -180,7 +180,7 @@ li:hover {
 	line-height: 16px;
 }
 
-.filters {
+#filters {
 	margin: 50px 0 50px 0;
 	display:flex;
 	justify-content: center;
@@ -243,7 +243,7 @@ form {
 	flex-direction: column;
 }
 
-.div-btn-form {
+#div-btn-form {
 	margin:auto
 }
 
@@ -257,7 +257,7 @@ form {
 	text-align: left;
 }
 
-#contact input[type="text"], #contact input[type="email"], .addPhoto-selectTag-input, .addPhoto-selectTitre, .formLogin input[type="email"], .formLogin input[type="password"], .input-category {
+#contact input[type="text"], #contact input[type="email"], .addPhoto-selectTitre, .formLogin input[type="email"], .formLogin input[type="password"], #input-category {
 	height: 50px;
 	font-size: 14px;
 	border: none;
@@ -323,7 +323,7 @@ footer nav ul {
 
 /* MODALE */
 
-.modale {
+#modale {
 	position:fixed;
 	font-family: 'Work Sans';
 	font-size: 26px;
@@ -337,18 +337,18 @@ footer nav ul {
 	align-items: center;
 }
 
-	.modale-container {
+	#modale-container {
 		position: absolute;
 		background-color: white;
 		border-radius: 10px;
 	}
 
-		.modale-header {
+		#modale-header {
 			display:flex;
 			justify-content: space-between;
 		}
 
-			.modale-close, .modale-back {
+			#modale-close, #modale-back {
 				width:24px;
 				height:24px;
 				position:absolute;
@@ -359,16 +359,16 @@ footer nav ul {
 				cursor: pointer;
 			}
 
-			.modale-close {
+			#modale-close {
 				right:0;
 			}
 
-			.modale-back {
+			#modale-back {
 				left:0;
 				display:none;
 			}
 
-				.modale-close img {
+				#modale-close img {
 					width:12px;
 					height:12px;
 					display:flex;
@@ -377,7 +377,7 @@ footer nav ul {
 					align-items: center;
 				}
 
-				.modale-back img {
+				#modale-back img {
 					width:21px;
 					height:18px;
 					display:flex;
@@ -388,18 +388,18 @@ footer nav ul {
 
 
 
-		.modale-gallery {
+		#modale-gallery {
 			display:block;
 		}
 
-			.modale h3 {
+			#modale h3 {
 				margin-top: 60px;
 				margin-bottom: 45px;
 				text-align: center;
 				display:inline-block;
 			}
 
-			.modale-list {
+			#modale-list {
 				margin:auto;
 				display:grid;
 				grid-template-columns: 77px 77px 77px 77px 77px;
@@ -432,13 +432,13 @@ footer nav ul {
 						cursor: pointer;
 					}
 
-				.modale hr {
+				#modale hr {
 					width:420px;
 					margin-top: 67px;
 					margin-bottom: 38px;
 				}
 
-			.modale-gallery button {
+			#modale-gallery button {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
@@ -452,7 +452,7 @@ footer nav ul {
 				width:236px;
 			}
 
-			.div-btn-form input {
+			#div-btn-form input {
 				margin: 0px 5px 0px 5px;
 				border-radius: 50px;
 				font-family: 'Syne';
@@ -472,21 +472,21 @@ footer nav ul {
 			}
 
 
-			.modale-addPhoto {
+			#modale-addPhoto {
 				display:none;
 			}
 
-			.modale form {
+			#modale form {
 				padding: 0px 105px 0px 105px;
 				margin-top: 0px;
 				font-size: 14px;
 			}
 
-				.blocFile input {
+				#blocFile input {
 					display: none;
 				}
 
-				.blocFile label {
+				#blocFile label {
 					width:420px;
 					height: 166px;
 					margin:0;
@@ -496,7 +496,7 @@ footer nav ul {
 					cursor: pointer;
 				}
 
-				.file-img {
+				#file-img {
 					display: block;
 					margin:auto;
 					width:76px;
@@ -505,20 +505,20 @@ footer nav ul {
 					padding-top:13px;
 				}
 
-				.file-button-div {
+				#file-button-div {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					padding-bottom: 19px;
 				}
 
-				.removeFile {
+				#removeFile {
 					display: none;
 					width:12px;
 					margin-right: 6px;
 				}
 
-				.file-button-add {
+				#file-button-add {
 					display: inline-block;
 					border-radius: 50px;
 					padding: 10px 33px 10px 33px;
@@ -527,15 +527,11 @@ footer nav ul {
 					margin: 7px 0px 7px 0px;
 				}
 
-				.file-button-format {
+				#file-button-format {
 					font-size: 10px;
 					display:inline;
 					color: #444444
 				}
-
-			.input-file {
-				display:none;
-			}
 
 			.addPhoto-selectTitre {
 				padding-left:16px;
@@ -544,13 +540,13 @@ footer nav ul {
 				font-family: 'Work Sans' ;
 			}
 
-			.input-category {
+			#input-category {
 				display:flex;
 				justify-content: space-between;
 				align-items: center;
 			}
 
-				.input-category select {
+				#input-category select {
 					padding-left: 16px;
 					font-size: 14px;
 					font-family: 'Work Sans' ;
@@ -561,7 +557,7 @@ footer nav ul {
 					height: 100%;
 				}
 
-				.category-arrow img {
+				#category-arrow img {
 					width:10px;
 					height:6px;
 					margin-left: -29px;
@@ -573,55 +569,7 @@ footer nav ul {
 						font-size: 24px;
 					}
 			
-			.div-msg-error {
+			#div-msg-error {
 				margin-top:16px;
 				color:red;
 			}
-
-
-/*			
-			.addPhoto-selectTag-input {
-				display:flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 6px;
-				cursor: pointer;
-				font-size:14px;
-			}
-				.addPhoto-selectTag-input img {
-					width:10px;
-					height:6px;
-					margin-right: 29px;
-					transition: rotate 1s;
-				}
-
-				.addPhoto-selectTag-input p {
-					margin-left: 16px;
-				}
-				
-				.addPhoto-selectTag-response {
-					display:none;
-					position:absolute;
-					width: 420px;
-					box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-				}
-					.addPhoto-selectTag-response li {
-						background-color: white;
-						padding-top:16px;
-						padding-bottom:16px;
-						padding-left:16px;
-						cursor: pointer;
-					}
-					.addPhoto-selectTag-response li:hover {
-						background-color: var(--file-blue);
-					}
-
-			.menu-open {
-				display:block;
-			}
-
-			.menu-close {
-				display:none;
-			}				
-
-*/
