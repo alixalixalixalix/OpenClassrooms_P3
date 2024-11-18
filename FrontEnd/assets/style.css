@@ -186,8 +186,7 @@ li:hover {
 	justify-content: center;
 }
 
-/* liste toutes les classes car soucis de prio m'empêche de dire filters button */
-.filters-tous, .filters-objets, .filters-appartements, .filters-hotels {
+.filters-button {
 	margin: 0px 5px 0px 5px;
 	border-radius: 50px;
 	font-family: 'Syne';
@@ -505,19 +504,6 @@ footer nav ul {
 					padding-top:13px;
 				}
 
-				#file-button-div {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					padding-bottom: 19px;
-				}
-
-				#removeFile {
-					display: none;
-					width:12px;
-					margin-right: 6px;
-				}
-
 				#file-button-add {
 					display: inline-block;
 					border-radius: 50px;
@@ -529,8 +515,9 @@ footer nav ul {
 
 				#file-button-format {
 					font-size: 10px;
-					display:inline;
-					color: #444444
+					display:block;
+					color: #444444;
+					display: block;
 				}
 
 			.addPhoto-selectTitre {

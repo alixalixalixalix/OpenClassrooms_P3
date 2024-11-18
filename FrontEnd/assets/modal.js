@@ -1,4 +1,6 @@
-import { generatorWorks } from "./projects.js"
+import { galleryGenerator } from "./projects.js"
+import { modalGenerator } from "./projects.js"
+import { addTrashEventListener } from "./projects.js"
 import { works } from "./projects.js"
 
 let editionProjets = document.getElementById("edition-projets");
@@ -21,8 +23,8 @@ let body = document.querySelector("body");
 
 let blocFileLabel = document.querySelector("#blocFile label")
 let blocFileImg = document.querySelector("#blocFile label img")
-let blocFileP = document.querySelector("#blocFile label p")
-let blocFileDiv = document.querySelector("#blocFile label div")
+let blocFileAdd = document.getElementById("file-button-add")
+let blocFileFormat = document.getElementById("file-button-format")
 let imgLoad = document.createElement("img")
 let divMessageError = document.querySelector("#div-msg-error")
 
@@ -65,8 +67,8 @@ buttonModaleGallery.addEventListener("click", function () {
   modaleAddPhoto.style.display = "block";
   btnBackModale.style.display = "block";
   blocFileImg.style.display = "block";
-  blocFileP.style.display = "inline-block";
-  blocFileDiv.style.display = "block";
+  blocFileAdd.style.display = "inline-block";
+  blocFileFormat.style.display = "block";
 });
 
 // Retour sur modale 1/2
@@ -107,8 +109,8 @@ formAddPhoto.addEventListener("change", function (event) {
 // Affichage img après chargement de l'input
 addPhotoFile.addEventListener("change", function (event) {
   blocFileImg.style.display = "none";
-  blocFileP.style.display = "none";
-  blocFileDiv.style.display = "none";
+  blocFileAdd.style.display = "none";
+  blocFileFormat.style.display = "none";
 
   const fileNameUser = event.target.files[0]; // On cible l'image insérée
   const previewURL = URL.createObjectURL(fileNameUser); // On génère une url temporaire pour afficher l'img
@@ -118,31 +120,22 @@ addPhotoFile.addEventListener("change", function (event) {
   imgLoad.style.height = "100%"
 })
 
-// Gestion des catégories
+// Récupération des catégories pour l'input selec
 const fetchCategory = await fetch("http://localhost:5678/api/categories");
 const responseCategory = await fetchCategory.json();
 
-// On récupère les attributs options du select
-let selectOption1 = document.getElementById("option1")
-let selectOption2 = document.getElementById("option2")
-let selectOption3 = document.getElementById("option3")
-
-// On leur donne la valeur de l'ID de leur catégorie
-selectOption1.value = responseCategory[0].id
-selectOption2.value = responseCategory[1].id
-selectOption3.value = responseCategory[2].id
-
-// On écrit le nom de la catégorie dans le select
-selectOption1.innerText = responseCategory[0].name
-selectOption2.innerText = responseCategory[1].name
-selectOption3.innerText = responseCategory[2].name
-
+for(let i = 0 ; i < responseCategory.length ; i++){
+  let option = document.createElement("option")
+  option.innerText = responseCategory[i].name
+  option.value = responseCategory[i].id
+  addPhotoSelect.appendChild(option)
+}
 
 // Formulaire ajout projet
 formAddPhoto.addEventListener("submit", async function (event) {
   event.preventDefault();
   let token = window.localStorage.getItem("token");
-  let userSelectOption = addPhotoSelect.value // On récupère la catégorie (number) choisie
+  let userSelectOption = addPhotoSelect.value; // On récupère la catégorie (number) choisie
 
   let formData = new FormData();
   formData.append("image", addPhotoFile.files[0]);
@@ -158,40 +151,16 @@ formAddPhoto.addEventListener("submit", async function (event) {
       return response.json(); // Récupérer la réponse JSON si l'API renvoie le nouvel objet
     }
   }).then((newWork) => {
-    // newWork est le nouveau projet ajouté, ou la réponse de l'API après l'ajout
-    works.push(newWork); // Ajouter ce nouveau projet dans la liste existante
-    generatorWorks(works);
+    works.push(newWork); // Ajout du nouveau projet dans les données
+    galleryGenerator(works); // Maj des projets dans la gallerie
+    modalGenerator(works) // Maj des projets dans la modale
+
+    addTrashEventListener(); // Si pas ça, impossible de suppr après add
+
     closeModale();
-    console.log("Fichier bien ajouté");
   }).catch((error) => {
-    console.log(error.message);
-    let messageError = document.createElement("p")
+    let messageError = document.createElement("p");
     messageError.innerText = "Tous les champs ne sont pas correctement remplis";
     divMessageError.appendChild(messageError);
   });
 });
-
-
-
-
-
-/* 
-
-  fetch(`http://localhost:5678/api/works`, {
-    method: "POST",
-    headers: {"Authorization": `Bearer ${token}`},
-    body: formData,
-    }).then((response) => {
-      if(response.ok) {
-        closeModale();
-        generatorWorks(works);
-        console.log("Fichier bien ajouté");
-      } else {
-        console.log("Erreur dans l'ajout du fichier");
-        let messageError = document.createElement("p")
-        messageError.innerText = "Tous les champs ne sont pas correctement rempli"
-        divMessageError.appendChild(messageError)
-      }
-    })
-
-*/

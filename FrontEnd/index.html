@@ -15,7 +15,7 @@
   </head>
   <body>
     <div id="edition-topbar">
-      <img src="./assets/icons/editor-white.png" class="imgEdition" alt="" />
+      <img src="./assets/icons/editor-white.png" class="imgEdition" alt="icon editor" />
       <p>Mode édition</p>
     </div>
 
@@ -27,14 +27,14 @@
             <li id="link-projets"><a href="index.html">projets</a></li>
             <li>contact</li>
             <li id="link-login"><a href="login.html">login</a></li>
-            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+            <li><img src="./assets/icons/instagram.png" alt="logo instagram" /></li>
           </ul>
         </nav>
       </header>
       <main>
         <section id="introduction">
           <figure>
-            <img src="./assets/images/sophie-bluel.png" alt="" />
+            <img src="./assets/images/sophie-bluel.png" alt="photo sophie bluel" />
           </figure>
           <article>
             <h2>Designer d'espace</h2>
@@ -64,15 +64,8 @@
             </div>
           </div>
           <div id="filters">
-            <button class="filters-button filters-tous filters-active">
+            <button id="filters-tous" class="filters-button filters-active">
               Tous
-            </button>
-            <button class="filters-button filters-objets">Objets</button>
-            <button class="filters-button filters-appartements">
-              Appartements
-            </button>
-            <button class="filters-button filters-hotels">
-              Hotels & restaurants
             </button>
           </div>
           <div id="gallery"></div>
@@ -122,10 +115,7 @@
               <label for="file-button">
                 <img id="file-img" src="assets/icons/jpg.png" />
                 <p id="file-button-add">+ Ajouter photo</p>
-                <div id="file-button-div">
-                  <img id="removeFile" src="assets/icons/close.png" />
-                  <p id="file-button-format">jpg, png : 4mo max</p>
-                </div>
+                <p id="file-button-format">jpg, png : 4mo max</p>
               </label>
             </div>
             <label for="title">Titre</label>
@@ -134,9 +124,6 @@
             <div id="input-category">
               <select name="category" id="category">
                 <option value=""></option>
-                <option id="option1" value=""></option>
-                <option id="option2" value=""></option>
-                <option id="option3" value=""></option>
               </select>
               <div id="category-arrow">
                 <img src="assets/icons/arrow.png" />
