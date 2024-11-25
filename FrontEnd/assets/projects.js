@@ -1,19 +1,19 @@
-// on vérifie si il y a le token dans le localstorage
+// On vérifie si il y a le token dans le localstorage
 let token = window.localStorage.getItem("token");
 if (token) {
-  // si token existe, dans la nav on modifie le login par logout
+  // Si token existe, dans la nav on modifie le login par logout
   let linkLogin = document.getElementById("link-login");
   linkLogin.innerText = "logout";
 
-  // on fait apparaitre la topbar edition
+  // On fait apparaitre la topbar edition
   let editionTopbar = document.getElementById("edition-topbar");
   editionTopbar.style.display = "flex";
 
-  // on fait apparaitre le modifier dans les projets
+  // On fait apparaitre le modifier dans les projets
   let editionProjets = document.getElementById("edition-projets");
   editionProjets.style.display = "flex";
 
-  // au clic sur logout, on se déconnecte
+  // Au clic sur logout, on se déconnecte
   linkLogin.addEventListener("click", function () {
     localStorage.removeItem("token");
     window.location.href = "login.html";
@@ -23,7 +23,7 @@ if (token) {
 const reponseWorks = await fetch("http://localhost:5678/api/works");
 export const works = await reponseWorks.json();
 
-let divFilter = document.getElementById("filters")
+let divFilter = document.getElementById("filters");
 
 export function galleryGenerator(works) {
   let gallery = document.getElementById("gallery");
@@ -56,7 +56,7 @@ export function modalGenerator(works) {
     let modaleCard = document.createElement("div");
     let modaleCardImg = document.createElement("img");
     let modaleCardTrash = document.createElement("img");
-    
+
     modaleCardTrash.id = worksId;
     modaleCardImg.src = works[i].imageUrl;
     modaleCardImg.classList.add("imgProjet");
@@ -71,28 +71,29 @@ export function modalGenerator(works) {
 }
 
 galleryGenerator(works);
-modalGenerator(works)
+modalGenerator(works);
 
 // Récupération des catégories pour afficher les boutons de filtres
 const fetchCategory = await fetch("http://localhost:5678/api/categories");
-const responseCategory = await fetchCategory.json();
+export const responseCategory = await fetchCategory.json();
 
-for(let i = 0 ; i < responseCategory.length ; i++){
-  let buttonFilter = document.createElement("button")
-  buttonFilter.innerText = responseCategory[i].name
-  buttonFilter.value = responseCategory[i].id
-  buttonFilter.classList.add("filters-button")
+for (let i = 0; i < responseCategory.length; i++) {
+  let buttonFilter = document.createElement("button");
+  buttonFilter.innerText = responseCategory[i].name;
+  buttonFilter.value = responseCategory[i].id;
+  buttonFilter.classList.add("filters-button");
 
-  divFilter.appendChild(buttonFilter)
+  divFilter.appendChild(buttonFilter);
 }
 
-// Filtre les work en fonction des catégories
+// Filtre les works en fonction des catégories
 let allButtonsFilters = document.querySelectorAll("#filters button");
 
-for(let i = 0 ; i < allButtonsFilters.length ; i++){
-  allButtonsFilters[i].addEventListener("click", function(){
+for (let i = 0; i < allButtonsFilters.length; i++) {
+  allButtonsFilters[i].addEventListener("click", function () {
     let filtreAction = works.filter(function (work) {
-      if(i === 0){ // Si Tous est cliqué, retourne tous les work
+      if (i === 0) {
+        // Si Tous est cliqué, retourne tous les work
         return work.categoryId >= 0;
       } else {
         return work.categoryId === i;
@@ -100,7 +101,7 @@ for(let i = 0 ; i < allButtonsFilters.length ; i++){
     });
     document.getElementById("gallery").innerHTML = "";
     galleryGenerator(filtreAction);
-  })
+  });
 }
 
 // Style swap filtre actif
@@ -119,7 +120,6 @@ export function addTrashEventListener() {
 
   for (let i = 0; i < allTrash.length; i++) {
     allTrash[i].addEventListener("click", function () {
-
       fetch(`http://localhost:5678/api/works/${allTrash[i].id}`, {
         method: "DELETE",
         headers: {
@@ -130,7 +130,7 @@ export function addTrashEventListener() {
         if (response.ok) {
           works.splice(i, 1); // Force la suppression du projet avant le rechargement de page
           galleryGenerator(works);
-          modalGenerator(works)
+          modalGenerator(works);
 
           addTrashEventListener(); // Sans ça, impossible de supprimer après une suppression
         }

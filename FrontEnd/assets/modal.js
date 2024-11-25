@@ -2,6 +2,7 @@ import { galleryGenerator } from "./projects.js"
 import { modalGenerator } from "./projects.js"
 import { addTrashEventListener } from "./projects.js"
 import { works } from "./projects.js"
+import { responseCategory } from "./projects.js"
 
 let editionProjets = document.getElementById("edition-projets");
 let modale = document.getElementById("modale");
@@ -47,11 +48,11 @@ btnCloseModale.addEventListener("click", function () {
 
 function closeModale() {
   modale.style.display = "none";
-  // on revient à l'étape 1 après ré-ouverture
+  // On revient à l'étape 1 après ré-ouverture
   modaleGallery.style.display = "block";
   modaleAddPhoto.style.display = "none";
   btnBackModale.style.display = "none";
-  // les champs redeviennent vides
+  // Les champs redeviennent vides
   addPhotoTitre.value = "";
   addPhotoSelect.value = "";
   addPhotoFile.value = "";
@@ -119,10 +120,6 @@ addPhotoFile.addEventListener("change", function (event) {
   imgLoad.src = previewURL
   imgLoad.style.height = "100%"
 })
-
-// Récupération des catégories pour l'input selec
-const fetchCategory = await fetch("http://localhost:5678/api/categories");
-const responseCategory = await fetchCategory.json();
 
 for(let i = 0 ; i < responseCategory.length ; i++){
   let option = document.createElement("option")
